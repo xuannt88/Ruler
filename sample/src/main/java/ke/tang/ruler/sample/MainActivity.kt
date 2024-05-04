@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.swEnable.setOnCheckedChangeListener { _, enabled -> binding.ruler.isEnabled = enabled }
         setContentView(binding.root)
     }
 
@@ -50,6 +49,9 @@ class MainActivity : AppCompatActivity() {
             binding.ruler.textSize,
             binding.ruler.textColor
         )
+
+        binding.swEnable.setOnCheckedChangeListener { _, enabled -> binding.ruler.isEnabled = enabled }
+        binding.swNotifyWhenMoving.setOnCheckedChangeListener { _, enabled -> binding.ruler.notifyWhenMoving = enabled }
 
         binding.stepWidth.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

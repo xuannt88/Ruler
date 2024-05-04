@@ -3,6 +3,7 @@
     <attr name="rulerViewStyle" format="reference" />
 
     <declare-styleable name="RulerView">
+        <attr name="notifyWhenMoving" format="boolean" />
         <attr name="stepWidth" format="dimension" />
         <attr name="rulerValueFormatter" format="string" />
         <attr name="scaleColor" format="color|reference" />

@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">标尺</string>
     <string name="label_enable_ruler">启用</string>
+    <string name="label_notify_moving">移动时通知</string>
     <string name="label_set_step_width">设置刻度间间距</string>
     <string name="label_set_scale_color">设置刻度颜色</string>
     <string name="label_set_ruler_color">设置标尺颜色</string>

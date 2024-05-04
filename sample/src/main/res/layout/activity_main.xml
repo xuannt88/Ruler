@@ -7,13 +7,6 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <Switch
-        android:id="@+id/sw_enable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/label_enable_ruler"
-        android:checked="true"/>
-
     <TextView
         android:id="@+id/result"
         style="?android:textAppearanceMedium"
@@ -40,6 +33,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/sw_enable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_enable_ruler"
+                android:checked="true"/>
+
+            <Switch
+                android:id="@+id/sw_notify_when_moving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_notify_moving"
+                android:checked="true"/>
 
             <!--刻度宽度-->
             <TextView

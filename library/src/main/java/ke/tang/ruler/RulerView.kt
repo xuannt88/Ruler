@@ -84,6 +84,7 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             requestLayout()
             invalidate()
         }
+    var notifyWhenMoving: Boolean = true
 
     @IntRange(from = 0, to = MAX_VALUE.toLong())
     var maxValue: Int = 0
@@ -163,6 +164,7 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     init {
         setWillNotDraw(false)
         with(context.obtainStyledAttributes(attrs, R.styleable.RulerView, defStyleAttr, R.style.Widget_RulerView)) {
+            notifyWhenMoving = getBoolean(R.styleable.RulerView_notifyWhenMoving, true)
             stepWidth = getDimensionPixelOffset(R.styleable.RulerView_stepWidth, 10.toDip())
             getString(R.styleable.RulerView_rulerValueFormatter).takeUnless { it.isNullOrBlank() }?.also {
                 kotlin.runCatching {
@@ -404,7 +406,8 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                             if (it.toInt() in contentOffsetRange) dx else dx / 2
                         }.toInt()
                         _value = getValueForContentOffset(contentOffset)
-                        notifyValueChanged()
+                        if (notifyWhenMoving)
+                            notifyValueChanged()
                         invalidate()
                     }
                 }
@@ -454,6 +457,8 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                                 scrollToRoundedValue()
                             }
                         }
+                        if (!notifyWhenMoving)
+                            notifyValueChanged()
                     }
                 }
                 invalidate()
