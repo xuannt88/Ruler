@@ -8,6 +8,8 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.swEnable.setOnCheckedChangeListener { _, enabled -> binding.ruler.isEnabled = enabled }
         setContentView(binding.root)
     }
 

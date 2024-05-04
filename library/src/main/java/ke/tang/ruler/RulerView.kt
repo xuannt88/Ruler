@@ -359,6 +359,8 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (!isEnabled) return false
+
         event.pointerCount
         val x = event.x
         val y = event.y
