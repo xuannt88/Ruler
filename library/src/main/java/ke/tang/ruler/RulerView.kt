@@ -2,7 +2,11 @@ package ke.tang.ruler
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
@@ -16,9 +20,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntRange
 import androidx.core.math.MathUtils
-import java.util.*
-import kotlin.Comparator
-import kotlin.collections.ArrayList
+import java.util.Collections
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -285,7 +287,35 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             if (labelRight > 0) {
                 if (0 == index % sectionScaleCount || index == maxScaleCount || index == minScaleCount) {
                     canvas.drawRect(left, rulerTop - scaleMaxHeight.toFloat(), right, rulerTop.toFloat(), rulerPaint)
-                    canvas.drawText(label, centerX, fontY, labelPaint)
+                    var labelX = centerX
+                    var labelY = fontY
+                    var diffIdx = index % sectionScaleCount
+                    if (diffIdx != 0) {
+                        when (index) {
+                            minScaleCount -> {
+                                labelPaint.textAlign = Paint.Align.CENTER
+                                diffIdx = sectionScaleCount - diffIdx
+                                if (labelPaint.measureText(label) > stepWidth * diffIdx) {
+                                    labelX -= labelPaint.measureText(label)/2 - scaleSize
+                                    labelY = rulerBottom - rulerSize - fontMetrics.bottom
+                                }
+                            }
+
+                            maxScaleCount -> {
+                                labelPaint.textAlign = Paint.Align.CENTER
+                                if (labelPaint.measureText(label) > stepWidth * diffIdx) {
+                                    labelX += labelPaint.measureText(label)/2 + scaleSize
+                                    labelY = rulerBottom - rulerSize - fontMetrics.bottom
+                                }
+                            }
+
+                            else -> labelPaint.textAlign = Paint.Align.CENTER
+                        }
+                    }
+                    else {
+                        labelPaint.textAlign = Paint.Align.CENTER
+                    }
+                    canvas.drawText(label, labelX, labelY, labelPaint)
                 } else {
                     canvas.drawRect(left, rulerTop - scaleMinHeight.toFloat(), right, rulerTop.toFloat(), rulerPaint)
                 }
@@ -304,7 +334,34 @@ class RulerView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             if (labelLeft < width) {
                 if (0 == index % sectionScaleCount || index == maxScaleCount || index == minScaleCount) {
                     canvas.drawRect(left, rulerBottom - rulerSize - scaleMaxHeight.toFloat(), right, rulerTop.toFloat(), rulerPaint)
-                    canvas.drawText(label, centerX, fontY, labelPaint)
+                    var labelX = centerX
+                    var labelY = fontY
+                    var diffIdx = index % sectionScaleCount
+                    if (diffIdx != 0) {
+                        when (index) {
+                            minScaleCount -> {
+                                labelPaint.textAlign = Paint.Align.CENTER
+                                diffIdx = sectionScaleCount - diffIdx
+                                if (labelPaint.measureText(label) > stepWidth * diffIdx) {
+                                    labelX -= labelPaint.measureText(label)/2 - scaleSize
+                                    labelY = rulerBottom - rulerSize - fontMetrics.bottom
+                                }
+                            }
+
+                            maxScaleCount -> {
+                                labelPaint.textAlign = Paint.Align.CENTER
+                                if (labelPaint.measureText(label) > stepWidth * diffIdx) {
+                                    labelX += labelPaint.measureText(label)/2 + scaleSize
+                                    labelY = rulerBottom - rulerSize - fontMetrics.bottom
+                                }
+                            }
+                            else -> labelPaint.textAlign = Paint.Align.CENTER
+                        }
+                    }
+                    else {
+                        labelPaint.textAlign = Paint.Align.CENTER
+                    }
+                    canvas.drawText(label, labelX, labelY, labelPaint)
                 } else {
                     canvas.drawRect(left, rulerBottom - rulerSize - scaleMinHeight.toFloat(), right, rulerTop.toFloat(), rulerPaint)
                 }
